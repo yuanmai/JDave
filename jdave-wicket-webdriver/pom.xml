@@ -27,13 +27,13 @@
     <dependency>
       <groupId>org.openqa.selenium.webdriver</groupId>
       <artifactId>webdriver-firefox</artifactId>
-      <version>0.6.870</version>
+      <version>0.6.964</version>
     </dependency>
     
     <dependency>
       <groupId>org.openqa.selenium.webdriver</groupId>
       <artifactId>webdriver-common</artifactId>
-      <version>0.6.870</version>
+      <version>0.6.964</version>
     </dependency>
     
     <dependency>
@@ -44,7 +44,7 @@
     <dependency>
       <groupId>org.apache.wicket</groupId>
       <artifactId>wicket</artifactId>
-      <version>1.4-SNAPSHOT</version>
+      <version>1.4.5</version>
     </dependency>
     <dependency>
       <groupId>javax.servlet</groupId>
