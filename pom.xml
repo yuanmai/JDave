@@ -12,11 +12,16 @@
       <name>Laughing Panda</name>
       <url>scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/</url>
     </repository>
+    <snapshotRepository>
+      <id>panda-snapshots</id>
+      <url>scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/snapshots/</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
   </distributionManagement>
   
   <scm>
-    <connection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk</connection>
-    <developerConnection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk</developerConnection>
+    <connection>scm:git:git://github.com/mpeltonen/JDave.git</connection>
+    <developerConnection>scm:git:git://github.com/mpeltonen/JDave.git</developerConnection>
   </scm>
   
   <modules>
@@ -274,16 +279,4 @@
     </license>
   </licenses>
 
-  <profiles>
-    <profile>
-      <id>ci</id>
-      <distributionManagement>
-        <repository>
-        <uniqueVersion>false</uniqueVersion>
-        <id>panda-snapshots</id>
-        <url>file:///var/www/localhost/htdocs/maven2/snapshots/</url>
-        </repository>
-      </distributionManagement>
-    </profile>
-  </profiles>
 </project>
