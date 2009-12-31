@@ -4,4 +4,5 @@ target
 *.ipr
 .classpath
 .project
+release.properties
 
