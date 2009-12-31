@@ -3,7 +3,7 @@
   <groupId>com.github.mpeltonen</groupId>
   <artifactId>jdave-parent</artifactId>
   <packaging>pom</packaging>
-  <version>1.2-SNAPSHOT</version>
+  <version>1.2-beta1</version>
   <name>jdave-parent</name>
   <url>http://maven.apache.org</url>
   <distributionManagement>
