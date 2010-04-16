@@ -52,7 +52,7 @@ public class ExecutingBehavior extends Behavior {
             } else {
                 runInCurrentThread(results, spec);
             }
-        } catch (RuntimeException e) {
+        } catch (Throwable e) {
             results.error(method, e);
         }
     }
