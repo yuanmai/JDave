@@ -15,21 +15,11 @@
  */
 package jdave.runner;
 
-import java.io.BufferedInputStream;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Collection;
-import java.util.List;
-import net.sf.cglib.asm.Attribute;
-import net.sf.cglib.asm.ClassAdapter;
-import net.sf.cglib.asm.ClassReader;
-import net.sf.cglib.asm.ClassWriter;
-import net.sf.cglib.asm.attrs.Annotation;
-import net.sf.cglib.asm.attrs.Attributes;
-import net.sf.cglib.asm.attrs.RuntimeVisibleAnnotations;
+import java.io.FileNotFoundException;
+import java.lang.annotation.Annotation;
 
+import jdave.Group;
 
 /**
  * @author Joni Freeman
@@ -43,89 +33,45 @@ public abstract class AnnotatedSpecScanner {
 
     public void forEach(final IAnnotatedSpecHandler annotatedSpecHandler) {
         scanner.forEach("class", new IFileHandler() {
-            public void handle(File file) {
+            public void handle(final File file) {
+                Class<?> clazz;
                 try {
-                    AnnotationReader reader = new AnnotationReader(new BufferedInputStream(new FileInputStream(file)));
-                    if (reader.getGroups() != null) {
-                        annotatedSpecHandler.handle(reader.getClassname(), reader.getGroups());
-                    }
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
+                    clazz = loadClass(file);
+                } catch (FileNotFoundException e) {
+                    throw new RuntimeException("File not found: " + file);
                 }
+                Group groupAnnotation = clazz.getAnnotation(Group.class);
+                String[] groups = groupAnnotation != null ? groupAnnotation.value() : new String[0];
+                if (groups.length == 0) {
+                    if (isInDefaultGroup(clazz.getName(), clazz.getAnnotations())) {
+                        groups = new String[] { Groups.DEFAULT };
+                    }
+                }
+                if (groups.length > 0) {
+                    annotatedSpecHandler.handle(clazz.getName(), groups);
+                }
+            }
+
+            private Class<?> loadClass(File file) throws FileNotFoundException {
+                try {
+                    String cleanedPath = cleanup(file.getPath());
+                    return Class.forName(cleanedPath);
+                } catch (Throwable t) {
+                    String path = file.getPath();
+                    int idx = path.indexOf(File.separatorChar);
+                    if (idx == -1) {
+                        throw new FileNotFoundException();
+                    }
+                    path = path.substring(idx + 1);
+                    return loadClass(new File(path));
+                }
+            }
+
+            private String cleanup(String path) {
+                return path.replace(".class", "").replace(File.separatorChar, '.');
             }
         });
     }
     
-    public abstract boolean isInDefaultGroup(String classname, Collection<Annotation> annotations);
-    
-    class AnnotationReader extends ClassAdapter {
-        private String classname;
-        private String[] groups;
-
-        public AnnotationReader(InputStream classAsStream) throws IOException {
-            super(new ClassWriter(false)); 
-            ClassReader reader = new ClassReader(classAsStream);
-            reader.accept(this, Attributes.getDefaultAttributes(), true);
-            classAsStream.close();
-        }
-        
-        public String[] getGroups() {
-            return groups;
-        }
-
-        public String getClassname() {
-            return classname;
-        }
-
-        @Override
-        public void visit(int access, int arg1, String name, String superName, String[] interfaces, String sourceFile) {
-            classname = name.replace('/', '.');
-        }
-        
-        @Override
-        public void visitAttribute(Attribute attr) {
-            if (attr instanceof RuntimeVisibleAnnotations) {
-                visitRuntimeVisibleAnnotations((RuntimeVisibleAnnotations) attr);
-            }
-        }
-
-        private void visitRuntimeVisibleAnnotations(RuntimeVisibleAnnotations annotations) {
-            checkIfGroupAnnotationPresent(annotations);
-            if (groups == null) {
-                checkIfInDefaultGroup(annotations);
-            }
-        }
-
-        private void checkIfGroupAnnotationPresent(RuntimeVisibleAnnotations annotations) {
-            for (Object object : annotations.annotations) {
-                Annotation annotation = (Annotation) object;
-                if (annotation.type.equals("Ljdave/Group;")) {
-                    visitGroupAnnotation(annotation);
-                }
-            }
-        }
-
-        @SuppressWarnings("unchecked")
-        private void checkIfInDefaultGroup(RuntimeVisibleAnnotations annotations) {
-            if (isInDefaultGroup(classname, annotations.annotations)) {
-                groups = new String[] { Groups.DEFAULT };
-            }
-        }
-        
-        private void visitGroupAnnotation(Annotation annotation) {
-            List<?> elementValues = annotation.elementValues;
-            for (Object elementValue : elementValues) {
-                Object[] values = (Object[]) elementValue;
-                for (Object param : values) {
-                    if (param.getClass().isArray()) {
-                        Object[] params = (Object[]) param;
-                        groups = new String[params.length];
-                        for (int j = 0; j < params.length; j++) {
-                            groups[j] = (String) params[j];
-                        }
-                    }
-                }
-            }
-        }
-    }
+    public abstract boolean isInDefaultGroup(String classname, Annotation... annotations);
 }

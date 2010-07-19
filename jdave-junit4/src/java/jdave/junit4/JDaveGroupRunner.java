@@ -15,18 +15,17 @@
  */
 package jdave.junit4;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.List;
 import jdave.Specification;
 import jdave.runner.AnnotatedSpecScanner;
 import jdave.runner.Groups;
 import jdave.runner.IAnnotatedSpecHandler;
 import jdave.runner.Resolution;
-import net.sf.cglib.asm.Type;
-import net.sf.cglib.asm.attrs.Annotation;
 import org.junit.runner.Description;
+import org.junit.runner.RunWith;
 import org.junit.runner.Runner;
 import org.junit.runner.notification.RunNotifier;
 
@@ -77,11 +76,11 @@ public class JDaveGroupRunner extends Runner {
     protected AnnotatedSpecScanner newAnnotatedSpecScanner(String suiteLocation) {
         return new AnnotatedSpecScanner(suiteLocation) {
             @Override
-            public boolean isInDefaultGroup(String classname, Collection<Annotation> annotations) {
+            public boolean isInDefaultGroup(String classname, Annotation... annotations) {
                 for (Annotation annotation : annotations) {
-                    if (annotation.type.equals("Lorg/junit/runner/RunWith;")) {
-                        Type runner = (Type) ((Object[]) annotation.elementValues.get(0))[1];
-                        return runner.getClassName().equals(JDaveRunner.class.getName());
+                    if (annotation.annotationType().equals(RunWith.class)) {
+                        RunWith runWith = (RunWith) annotation;
+                        return runWith.value().equals(JDaveRunner.class);
                     }
                 }
                 return false;

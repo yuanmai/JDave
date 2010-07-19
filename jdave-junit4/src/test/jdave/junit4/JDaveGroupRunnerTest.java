@@ -15,9 +15,10 @@
  */
 package jdave.junit4;
 
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 import jdave.Group;
 import jdave.Specification;
@@ -25,14 +26,8 @@ import jdave.runner.AnnotatedSpecScanner;
 import jdave.runner.Groups;
 import jdave.runner.IAnnotatedSpecHandler;
 import junit.framework.Assert;
+import static java.util.Arrays.asList;
 import static junit.framework.Assert.assertEquals;
-import net.sf.cglib.asm.Attribute;
-import net.sf.cglib.asm.ClassAdapter;
-import net.sf.cglib.asm.ClassReader;
-import net.sf.cglib.asm.ClassWriter;
-import net.sf.cglib.asm.attrs.Annotation;
-import net.sf.cglib.asm.attrs.Attributes;
-import net.sf.cglib.asm.attrs.RuntimeVisibleAnnotations;
 import org.jmock.Expectations;
 import org.jmock.Mockery;
 import org.jmock.integration.junit4.JMock;
@@ -98,7 +93,7 @@ public class JDaveGroupRunnerTest {
                     }
                     
                     @Override
-                    public boolean isInDefaultGroup(String classname, Collection<Annotation> annotations) {
+                    public boolean isInDefaultGroup(String classname, Annotation... annotations) {
                         return false;
                     }
                 };
@@ -114,19 +109,15 @@ public class JDaveGroupRunnerTest {
     @Test
     public void categorizesSpecToDefaultGroupIfItHasRunWithJDaveRunnerAnnotation() throws Exception {
         runner = new JDaveGroupRunner(DefaultSpec.class);
-        ClassReader reader = new ClassReader(getClass().getResourceAsStream("JDaveGroupRunnerTest$DefaultSpec.class"));
-        AnnotationCollector collector = new AnnotationCollector();
-        reader.accept(collector, Attributes.getDefaultAttributes(), true);
-        Assert.assertTrue(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
+        Annotation[] annotations = JDaveGroupRunnerTest.DefaultSpec.class.getAnnotations();
+        Assert.assertTrue(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", annotations));
     }
     
     @Test
     public void doesNotCategorizeSpecToDefaultGroupIfItDoesNotHaveRunWithAnnotation() throws Exception {
         runner = new JDaveGroupRunner(DefaultSpec.class);
-        ClassReader reader = new ClassReader(getClass().getResourceAsStream("JDaveGroupRunnerTest$SpecWithUnrecognizedAnnotation.class"));
-        AnnotationCollector collector = new AnnotationCollector();
-        reader.accept(collector, Attributes.getDefaultAttributes(), true);
-        Assert.assertFalse(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", collector.annotations));
+        Annotation[] annotations = JDaveGroupRunnerTest.SpecWithUnrecognizedAnnotation.class.getAnnotations();
+        Assert.assertFalse(runner.newAnnotatedSpecScanner("").isInDefaultGroup("", annotations));
     }
 
     @Test
@@ -141,7 +132,7 @@ public class JDaveGroupRunnerTest {
                     public void forEach(IAnnotatedSpecHandler annotatedSpecHandler) {
                     }
                     @Override
-                    public boolean isInDefaultGroup(String classname, Collection<Annotation> annotations) {
+                    public boolean isInDefaultGroup(String classname, Annotation... annotations) {
                         return false;
                     }
                 };
@@ -157,24 +148,14 @@ public class JDaveGroupRunnerTest {
         assertEquals("jdave.junit4.JDaveGroupRunnerTest$Suite", description.getDisplayName());
         ArrayList<Description> descriptionsForSuite = description.getChildren();
         assertEquals(2, descriptionsForSuite.size());
+        List<String> descriptions = asList(descriptionsForSuite.get(0).getDisplayName(), descriptionsForSuite.get(1).getDisplayName());
+        List<String> expected = asList("jdave.junit4.JDaveGroupRunnerTest$Spec1", "jdave.junit4.JDaveGroupRunnerTest$Spec2");
+        assertEquals(expected.containsAll(descriptions), true);
+        
+        /*
         assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec1", descriptionsForSuite.get(1).getDisplayName());
         assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec2", descriptionsForSuite.get(0).getDisplayName());
-    }
-    
-    private static class AnnotationCollector extends ClassAdapter {
-        List<Annotation> annotations;
-        
-        public AnnotationCollector() {
-            super(new ClassWriter(false));
-        }
-
-        @Override
-        @SuppressWarnings("unchecked")
-        public void visitAttribute(Attribute attr) {
-            if (attr instanceof RuntimeVisibleAnnotations) {
-                annotations = ((RuntimeVisibleAnnotations) attr).annotations;
-            }
-        }
+        */
     }
     
     @RunWith(JDaveGroupRunner.class)

@@ -21,10 +21,12 @@ import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.sf.cglib.asm.AnnotationVisitor;
 import net.sf.cglib.asm.Attribute;
 import net.sf.cglib.asm.ClassReader;
 import net.sf.cglib.asm.ClassVisitor;
-import net.sf.cglib.asm.CodeVisitor;
+import net.sf.cglib.asm.FieldVisitor;
+import net.sf.cglib.asm.MethodVisitor;
 import net.sf.cglib.asm.Label;
 
 /**
@@ -54,7 +56,7 @@ public class AsmLineNumberStrategy implements LineNumberStrategy {
             InputStream classAsStream = toStream(clazz);
             ClassReader reader = new ClassReader(classAsStream);
             visitor = new LineNumberClassVisitor();
-            reader.accept(visitor, false);
+            reader.accept(visitor, 0);
             classAsStream.close();
             cache.put(clazz, visitor);
             return visitor;
@@ -82,7 +84,8 @@ public class AsmLineNumberStrategy implements LineNumberStrategy {
         private String nextMethod;
 
         @Override
-        public CodeVisitor visitMethod(int access, String name, String desc, String[] exceptions, Attribute attrs) {
+        public MethodVisitor visitMethod(int access, String name, String arg2, String arg3,
+                String[] exceptions) {
             nextMethod = name;
             return codeVisitor;
         }
@@ -121,17 +124,7 @@ public class AsmLineNumberStrategy implements LineNumberStrategy {
 
     private static class NullClassVisitor implements ClassVisitor {
 
-        public void visit(int version, int access, String name, String superName, String[] interfaces, String sourceFile) {
-        }
-
         public void visitInnerClass(String name, String outerName, String innerName, int access) {
-        }
-
-        public void visitField(int access, String name, String desc, Object value, Attribute attrs) {
-        }
-
-        public CodeVisitor visitMethod(int access, String name, String desc, String[] exceptions, Attribute attrs) {
-            return null;
         }
 
         public void visitAttribute(Attribute attr) {
@@ -139,9 +132,31 @@ public class AsmLineNumberStrategy implements LineNumberStrategy {
 
         public void visitEnd() {
         }
+
+        public void visit(int arg0, int arg1, String arg2, String arg3, String arg4, String[] arg5) {
+        }
+
+        public AnnotationVisitor visitAnnotation(String arg0, boolean arg1) {
+            return null;
+        }
+
+        public FieldVisitor visitField(int arg0, String arg1, String arg2, String arg3, Object arg4) {
+            return null;
+        }
+
+        public MethodVisitor visitMethod(int arg0, String arg1, String arg2, String arg3,
+                String[] arg4) {
+            return null;
+        }
+
+        public void visitOuterClass(String arg0, String arg1, String arg2) {
+        }
+
+        public void visitSource(String arg0, String arg1) {
+        }
     }
 
-    private static class NullCodeVisitor implements CodeVisitor {
+    private static class NullCodeVisitor implements MethodVisitor {
 
         public void visitInsn(int opcode) {
         }
@@ -188,13 +203,35 @@ public class AsmLineNumberStrategy implements LineNumberStrategy {
         public void visitMaxs(int maxStack, int maxLocals) {
         }
 
-        public void visitLocalVariable(String name, String desc, Label start, Label end, int index) {
-        }
-
         public void visitLineNumber(int line, Label start) {
         }
 
         public void visitAttribute(Attribute attr) {
+        }
+
+        public AnnotationVisitor visitAnnotation(String arg0, boolean arg1) {
+            return null;
+        }
+
+        public AnnotationVisitor visitAnnotationDefault() {
+            return null;
+        }
+
+        public void visitCode() {
+        }
+
+        public void visitEnd() {
+        }
+
+        public void visitFrame(int arg0, int arg1, Object[] arg2, int arg3, Object[] arg4) {
+        }
+
+        public void visitLocalVariable(String arg0, String arg1, String arg2, Label arg3,
+                Label arg4, int arg5) {
+        }
+
+        public AnnotationVisitor visitParameterAnnotation(int arg0, String arg1, boolean arg2) {
+            return null;
         }
     }
 }
