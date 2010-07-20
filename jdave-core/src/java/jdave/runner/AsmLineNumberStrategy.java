@@ -28,6 +28,7 @@ import net.sf.cglib.asm.ClassVisitor;
 import net.sf.cglib.asm.FieldVisitor;
 import net.sf.cglib.asm.MethodVisitor;
 import net.sf.cglib.asm.Label;
+import net.sf.cglib.asm.Opcodes;
 
 /**
  * @author Esko Luontola
@@ -84,8 +85,10 @@ public class AsmLineNumberStrategy implements LineNumberStrategy {
         private String nextMethod;
 
         @Override
-        public MethodVisitor visitMethod(int access, String name, String arg2, String arg3,
-                String[] exceptions) {
+        public MethodVisitor visitMethod(int access, String name, String desc, String signature, String[] exceptions) {
+            if ((access & Opcodes.ACC_PUBLIC) == 0) {
+                return null;
+            }
             nextMethod = name;
             return codeVisitor;
         }
@@ -99,7 +102,7 @@ public class AsmLineNumberStrategy implements LineNumberStrategy {
         }
 
         public Integer firstMethodLineNumber(Method method) {
-            // TODO: does not handle overloaded methods properly - ignores method parameters
+            // TODO: does not handle public overloaded methods properly - ignores method parameters
             return methodLines.get(method.getName());
         }
 

@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
 import java.util.Comparator;
 
 /**
- * Sorts methods according to the order in which they have been declared in the source code.
+ * Sorts public methods according to the order in which they have been declared in the source code.
  *
  * @author Esko Luontola
  * @since 4.1.2008
