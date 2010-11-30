@@ -1,6 +1,6 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>org.jdave</groupId>
+  <groupId>com.github.mpeltonen</groupId>
   <artifactId>jdave-parent</artifactId>
   <packaging>pom</packaging>
   <version>1.2-SNAPSHOT</version>
@@ -12,25 +12,30 @@
       <name>Laughing Panda</name>
       <url>scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/</url>
     </repository>
+    <snapshotRepository>
+      <id>panda-snapshots</id>
+      <url>scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/snapshots/</url>
+      <uniqueVersion>false</uniqueVersion>
+    </snapshotRepository>
   </distributionManagement>
   
   <scm>
-    <connection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk</connection>
-    <developerConnection>scm:svn:https://svn.laughingpanda.org/svn/jdave/trunk</developerConnection>
+    <connection>scm:git:git://github.com/mpeltonen/JDave.git</connection>
+    <developerConnection>scm:git:git://github.com/mpeltonen/JDave.git</developerConnection>
   </scm>
   
   <modules>
-    <module>../jdave-core</module>
-    <module>../jdave-junit4</module>
-    <module>../jdave-jemmy</module>
-    <module>../jdave-wicket</module>
-    <module>../jdave-wicket-selenium</module>
-    <module>../jdave-wicket-webdriver</module>
-    <module>../jdave-examples</module>
-    <module>../jdave-report-plugin</module>
-    <module>../jdave-scala</module>
-    <module>../jdave-scala-suites</module>
-    <module>../jdave-unfinalizer</module>
+    <module>jdave-core</module>
+    <module>jdave-junit4</module>
+    <!--module>jdave-jemmy</module-->
+    <module>jdave-wicket</module>
+    <!--module>jdave-wicket-selenium</module-->
+    <module>jdave-wicket-webdriver</module>
+    <!--module>jdave-examples</module-->
+    <module>jdave-report-plugin</module>
+    <!--module>jdave-scala</module>
+    <module>jdave-scala-suites</module>
+    <module>jdave-unfinalizer</module-->
   </modules>
   
   <developers>
@@ -216,7 +221,13 @@
           </execution>
         </executions>
       </plugin>
-      
+      <plugin>
+        <artifactId>maven-release-plugin</artifactId>
+        <version>2.0-beta-9</version>
+        <configuration>
+          <autoVersionSubmodules>true</autoVersionSubmodules>
+        </configuration>
+      </plugin>
     </plugins>
   </build>
   <reporting>
@@ -274,16 +285,4 @@
     </license>
   </licenses>
 
-  <profiles>
-    <profile>
-      <id>ci</id>
-      <distributionManagement>
-        <repository>
-        <uniqueVersion>false</uniqueVersion>
-        <id>panda-snapshots</id>
-        <url>file:///var/www/localhost/htdocs/maven2/snapshots/</url>
-        </repository>
-      </distributionManagement>
-    </profile>
-  </profiles>
 </project>

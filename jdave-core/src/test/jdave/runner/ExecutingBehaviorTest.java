@@ -80,6 +80,19 @@ public class ExecutingBehaviorTest extends MockSupport {
         run("java.lang.RuntimeException: From after context destroy");
         verifyMocks();
     }
+    
+    @Test
+    public void testErrorIsReportedWhenSpecConstructorThrowsError() throws Exception {
+        final Collection<Throwable> occurredErrors = new HashSet<Throwable>();
+        ExecutingBehavior behavior = new ExecutingBehavior(null, SpecWithConstructorThrowingError.class, null);
+        behavior.run(new ResultsAdapter() {
+            public void error(Method method, Throwable t) {
+                occurredErrors.add(t);
+            }
+        });
+        Assert.assertEquals(1, occurredErrors.size());
+        Assert.assertEquals(ExceptionInInitializerError.class, occurredErrors.iterator().next().getClass());
+    }
 
     private void run(String expectedError) {
         final Collection<Throwable> occurredErrors = new HashSet<Throwable>();
@@ -108,6 +121,12 @@ public class ExecutingBehaviorTest extends MockSupport {
 
             public void behavior() {
             }
+        }
+    }
+    
+    public static class SpecWithConstructorThrowingError extends Specification<Void> {
+        public SpecWithConstructorThrowingError() {
+            throw new ExceptionInInitializerError(); 
         }
     }
 }

@@ -2,10 +2,9 @@
   <modelVersion>4.0.0</modelVersion>
   
   <parent>
-    <groupId>org.jdave</groupId>
+    <groupId>com.github.mpeltonen</groupId>
     <artifactId>jdave-parent</artifactId>
     <version>1.2-SNAPSHOT</version>    
-    <relativePath>../jdave-parent</relativePath>
   </parent>
 
   <artifactId>jdave-report-plugin</artifactId>
@@ -34,12 +33,12 @@
       <version>8.7</version>
     </dependency>
     <dependency>
-      <groupId>org.jdave</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>jdave-core</artifactId>
       <version>${project.version}</version>
     </dependency>
     <dependency>
-      <groupId>org.jdave</groupId>
+      <groupId>${project.groupId}</groupId>
       <artifactId>jdave-junit4</artifactId>
       <version>${project.version}</version>
       <scope>test</scope>

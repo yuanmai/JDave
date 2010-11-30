@@ -157,8 +157,8 @@ public class JDaveGroupRunnerTest {
         assertEquals("jdave.junit4.JDaveGroupRunnerTest$Suite", description.getDisplayName());
         ArrayList<Description> descriptionsForSuite = description.getChildren();
         assertEquals(2, descriptionsForSuite.size());
-        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec1", descriptionsForSuite.get(0).getDisplayName());
-        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec2", descriptionsForSuite.get(1).getDisplayName());
+        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec1", descriptionsForSuite.get(1).getDisplayName());
+        assertEquals("jdave.junit4.JDaveGroupRunnerTest$Spec2", descriptionsForSuite.get(0).getDisplayName());
     }
     
     private static class AnnotationCollector extends ClassAdapter {
