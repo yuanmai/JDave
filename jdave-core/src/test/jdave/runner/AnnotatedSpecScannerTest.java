@@ -14,18 +14,15 @@
  * limitations under the License.
  */
 package jdave.runner;
-
+import java.lang.annotation.Annotation;
 import static org.junit.Assert.assertEquals;
 
 import java.util.Arrays;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
 import jdave.runner.dummies.Dummy1;
 import jdave.runner.dummies.Dummy2;
-import net.sf.cglib.asm.attrs.Annotation;
-
 import org.junit.Test;
 
 /**
@@ -36,7 +33,7 @@ public class AnnotatedSpecScannerTest {
     public void testFindsClassesWithGroupAnnotation() {
         AnnotatedSpecScanner scanner = new AnnotatedSpecScanner("target/test-classes/jdave/runner/dummies") {
             @Override
-            public boolean isInDefaultGroup(String classname, Collection<Annotation> annotations) {
+            public boolean isInDefaultGroup(String classname, Annotation... annotations) {
                 return false;
             }
         };
@@ -54,7 +51,7 @@ public class AnnotatedSpecScannerTest {
     public void testHandlesSpecsWhichAreInDefaultGroup() throws Exception {
         AnnotatedSpecScanner scanner = new AnnotatedSpecScanner("target/test-classes/jdave/runner/dummies") {
             @Override
-            public boolean isInDefaultGroup(String classname, Collection<Annotation> annotations) {
+            public boolean isInDefaultGroup(String classname, Annotation... annotations) {
                 return classname.equals(Dummy2.class.getName());
             }
         };

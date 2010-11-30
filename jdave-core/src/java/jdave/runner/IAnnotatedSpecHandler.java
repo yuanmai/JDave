@@ -19,5 +19,5 @@ package jdave.runner;
  * @author Joni Freeman
  */
 public interface IAnnotatedSpecHandler {
-    void handle(String classname, String... groups);
+    void handle(String name, String... groups);
 }
