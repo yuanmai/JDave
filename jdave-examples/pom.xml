@@ -15,7 +15,7 @@
     <pluginRepository>
       <id>laughing-panda</id>
       <name>Laughing Panda</name>
-      <url>http://www.laughingpanda.org/maven2/</url>
+      <url>http://maven.laughingpanda.org/maven2/</url>
     </pluginRepository>
   </pluginRepositories>
     

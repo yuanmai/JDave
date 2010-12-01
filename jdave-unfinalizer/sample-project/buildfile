@@ -4,8 +4,8 @@ basedir = File.dirname(__FILE__)
 require "buildr"
 
 repositories.remote << "http://repo1.maven.org/maven2"  
-repositories.remote << "http://www.laughingpanda.org/maven2"
-repositories.remote << "http://www.laughingpanda.org/maven2/snapshots"
+repositories.remote << "http://maven.laughingpanda.org/maven2"
+repositories.remote << "http://maven.laughingpanda.org/maven2/snapshots"
 
 define "sample-project" do  
   compile.options.other = ["-encoding", "utf-8", "-target", "1.6"]

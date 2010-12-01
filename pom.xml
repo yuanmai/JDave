@@ -10,11 +10,11 @@
     <repository>
       <id>panda</id>
       <name>Laughing Panda</name>
-      <url>scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/</url>
+      <url>scp://maven.laughingpanda.org:/var/www/w/maven.laughingpanda.org/maven2/</url>
     </repository>
     <snapshotRepository>
       <id>panda-snapshots</id>
-      <url>scp://ssh.laughingpanda.org:/var/www/localhost/htdocs/maven2/snapshots/</url>
+      <url>scp://maven.laughingpanda.org:/var/www/w/maven.laughingpanda.org/maven2/snapshots/</url>
       <uniqueVersion>false</uniqueVersion>
     </snapshotRepository>
   </distributionManagement>
@@ -257,11 +257,11 @@
   <repositories>
     <repository>
       <id>laughingpanda-maven2</id>
-      <url>http://www.laughingpanda.org/maven2/</url>
+      <url>http://maven.laughingpanda.org/maven2/</url>
     </repository>
     <repository>
       <id>laughingpanda-maven2-snapshots</id>
-      <url>http://www.laughingpanda.org/maven2/snapshots/</url>
+      <url>http://maven.laughingpanda.org/maven2/snapshots/</url>
     </repository>
     <repository>
       <id>openqa-selenium-maven2</id>
