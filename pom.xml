@@ -20,8 +20,8 @@
   </distributionManagement>
   
   <scm>
-    <connection>scm:git:git://github.com/mpeltonen/JDave.git</connection>
-    <developerConnection>scm:git:git://github.com/mpeltonen/JDave.git</developerConnection>
+    <connection>scm:git:git://github.com/jdave/JDave.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/jdave/JDave.git</developerConnection>
   </scm>
   
   <modules>
