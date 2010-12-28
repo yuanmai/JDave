@@ -17,19 +17,15 @@ package jdave.webdriver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebDriver.Options;
-import org.openqa.selenium.firefox.FirefoxBinary;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.firefox.FirefoxLauncher;
-import org.openqa.selenium.firefox.internal.ProfilesIni;
 
 /**
  * @author Juha Karemo
  */
 public class Browser {
-    private static final String DEFAULT_FIREFOX_PROFILE_NAME = "WebDriver";
-    private String profileName = DEFAULT_FIREFOX_PROFILE_NAME;
+    private final String profileName;
 
     public Browser() {
+        this(null);
     }
 
     public Browser(String profileName) {
@@ -37,7 +33,10 @@ public class Browser {
     }
 
     public void open() {
-        initFirefoxProfile();
+        // TODO: this is madness, isn't there any other way to set the profile name
+        if (profileName != null) {
+            System.setProperty("webdriver.firefox.profile", profileName);
+        }
     }
 
     public void close() {
@@ -47,15 +46,5 @@ public class Browser {
             options.deleteAllCookies();
         }
         webDriver.quit();
-    }
-
-    @SuppressWarnings("deprecation")
-    private void initFirefoxProfile() {
-        FirefoxBinary binary = new FirefoxBinary();
-        FirefoxLauncher launcher = new FirefoxLauncher(binary);
-        ProfilesIni profiles = new ProfilesIni();
-        if (profiles.getProfile(profileName) == null) {
-            launcher.createBaseWebDriverProfile(binary, profileName, FirefoxDriver.DEFAULT_PORT);
-        }
     }
 }
