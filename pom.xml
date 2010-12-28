@@ -15,7 +15,6 @@
     <snapshotRepository>
       <id>panda-snapshots</id>
       <url>scp://maven.laughingpanda.org:/var/www/w/maven.laughingpanda.org/maven2/snapshots/</url>
-      <uniqueVersion>false</uniqueVersion>
     </snapshotRepository>
   </distributionManagement>
   
@@ -244,6 +243,13 @@
         </configuration>
       </plugin>
     </plugins>
+    <extensions>
+      <extension>
+        <groupId>org.apache.maven.wagon</groupId>
+        <artifactId>wagon-ssh</artifactId>
+        <version>1.0-beta-7</version>
+      </extension>
+    </extensions>
   </build>
   <reporting>
     <plugins>
