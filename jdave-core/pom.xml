@@ -6,11 +6,11 @@
     <artifactId>jdave-parent</artifactId>
     <version>1.2-SNAPSHOT</version>    
   </parent>
-
+  
   <artifactId>jdave-core</artifactId>
   <name>jdave-core</name>
   <packaging>jar</packaging>
-    
+  
   <build>
     <resources>
       <resource>
@@ -29,5 +29,5 @@
       </testResource>
     </testResources>
   </build>
-    
+  
 </project>

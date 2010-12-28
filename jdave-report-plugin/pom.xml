@@ -6,7 +6,7 @@
     <artifactId>jdave-parent</artifactId>
     <version>1.2-SNAPSHOT</version>    
   </parent>
-
+  
   <artifactId>jdave-report-plugin</artifactId>
   <name>Maven JDave report plugin</name>
   <packaging>maven-plugin</packaging>

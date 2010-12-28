@@ -1,16 +1,16 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
   <modelVersion>4.0.0</modelVersion>
-
+  
   <parent>
     <groupId>org.jdave</groupId>
     <artifactId>jdave-parent</artifactId>
     <version>1.2-SNAPSHOT</version>    
   </parent>
-
+  
   <artifactId>jdave-wicket</artifactId>
   <name>jdave-wicket</name>
   <packaging>jar</packaging>
-
+  
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -52,8 +52,8 @@
       <optional>true</optional>
     </dependency>
   </dependencies>
-
-
+  
+  
   <build>
     <sourceDirectory>src/java</sourceDirectory>
     <resources>
@@ -66,7 +66,7 @@
         <directory>src/test</directory>
       </testResource>
     </testResources>
-
+    
     <plugins>
       <plugin>
         <artifactId>maven-surefire-plugin</artifactId>
@@ -78,5 +78,5 @@
       </plugin>
     </plugins>
   </build>
-
+  
 </project>

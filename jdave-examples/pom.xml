@@ -6,11 +6,11 @@
     <artifactId>jdave-parent</artifactId>
     <version>1.2-SNAPSHOT</version>    
   </parent>
-
+  
   <artifactId>jdave-examples</artifactId>
   <name>jdave-examples</name>
   <packaging>jar</packaging>
-   
+  
   <pluginRepositories>
     <pluginRepository>
       <id>laughing-panda</id>
@@ -18,7 +18,7 @@
       <url>http://maven.laughingpanda.org/maven2/</url>
     </pluginRepository>
   </pluginRepositories>
-    
+  
   <dependencies>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -78,7 +78,8 @@
               <name>jdave.tools.specdox.dir</name>
               <value>target/jdave</value>
             </property>
-          </systemProperties>          
+          </systemProperties>
+           
         </configuration>
       </plugin>
     </plugins>
