@@ -30,11 +30,11 @@
     <module>jdave-wicket</module>
     <!--module>jdave-wicket-selenium</module-->
     <module>jdave-wicket-webdriver</module>
-    <!--module>jdave-examples</module-->
+    <module>jdave-examples</module>
     <module>jdave-report-plugin</module>
     <!--module>jdave-scala</module>
-    <module>jdave-scala-suites</module>
-    <module>jdave-unfinalizer</module-->
+    <module>jdave-scala-suites</module-->
+    <module>jdave-unfinalizer</module>
   </modules>
   
   <developers>
