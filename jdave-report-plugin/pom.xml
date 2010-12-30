@@ -8,7 +8,7 @@
   </parent>
   
   <artifactId>jdave-report-plugin</artifactId>
-  <name>Maven JDave report plugin</name>
+  <name>jdave-report-plugin</name>
   <packaging>maven-plugin</packaging>
   
   <dependencies>
