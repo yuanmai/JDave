@@ -30,7 +30,6 @@
     <module>jdave-wicket-webdriver</module>
     <module>jdave-examples</module>
     <module>jdave-report-plugin</module>
-    <module>jdave-unfinalizer</module>
   </modules>
   
   <developers>
