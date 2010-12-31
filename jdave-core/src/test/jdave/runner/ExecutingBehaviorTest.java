@@ -86,6 +86,7 @@ public class ExecutingBehaviorTest extends MockSupport {
         final Collection<Throwable> occurredErrors = new HashSet<Throwable>();
         ExecutingBehavior behavior = new ExecutingBehavior(null, SpecWithConstructorThrowingError.class, null);
         behavior.run(new ResultsAdapter() {
+            @Override
             public void error(Method method, Throwable t) {
                 occurredErrors.add(t);
             }
