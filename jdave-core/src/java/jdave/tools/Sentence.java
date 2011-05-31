@@ -15,8 +15,6 @@
  */
 package jdave.tools;
 
-import org.hamcrest.core.IsNull;
-
 /**
  * @author Joni Freeman
  * @author Tommi Reiman

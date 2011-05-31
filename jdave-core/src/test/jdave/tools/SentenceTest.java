@@ -37,6 +37,7 @@ public class SentenceTest {
 
     @Test
     public void numbersFormatCorrectly() {
-        assertEquals(fromCamelCase("12camelsAreWorth100Euros").toString(), "12 camels are worth 100 euros");
+        assertEquals(fromCamelCase("12camelsAreWorth100Euros").toString(),
+                "12 camels are worth 100 euros");
     }
 }
