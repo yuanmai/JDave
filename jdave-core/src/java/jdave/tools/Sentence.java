@@ -15,6 +15,8 @@
  */
 package jdave.tools;
 
+import static java.lang.Character.isDigit;
+
 /**
  * @author Joni Freeman
  * @author Tommi Reiman
@@ -31,7 +33,7 @@ public class Sentence {
         boolean inNumber = false;
         for (int pos = 0; pos < s.length(); pos++) {
             char ch = s.charAt(pos);
-            if (isDigit(pos, ch)) {
+            if (isDigit(ch)) {
                 if (!inNumber) {
                     sentence.append(" ");
                 }
@@ -48,10 +50,6 @@ public class Sentence {
             }
         }
         return new Sentence(sentence.toString().trim());
-    }
-
-    private static boolean isDigit(int pos, char ch) {
-        return Character.isDigit(ch);
     }
 
     private static boolean isUpperCase(int pos, char ch) {
