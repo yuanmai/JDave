@@ -17,9 +17,8 @@ package jdave.webdriver.specification;
 
 import jdave.Specification;
 import jdave.webdriver.Browser;
+import jdave.webdriver.WebDriverFactory;
 import jdave.webdriver.WebDriverHolder;
-
-import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * @author Marko Sibakov
@@ -30,7 +29,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
     @Override
     public final void create() {
         onBeforeCreate();
-        WebDriverHolder.set(new FirefoxDriver());
+        WebDriverHolder.set(new WebDriverFactory().createFireFoxDriver());
         browser.open();
         onCreate();
     }

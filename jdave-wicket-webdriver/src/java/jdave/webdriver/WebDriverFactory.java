@@ -17,12 +17,15 @@ package jdave.webdriver;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.firefox.FirefoxProfile;
 
 /**
  * @author Juha Karemo
  */
 public class WebDriverFactory {
     public WebDriver createFireFoxDriver() {
-        return new FirefoxDriver();
+        FirefoxProfile profile = new FirefoxProfile();
+        profile.setPreference("extensions.checkCompatibility.7.0", false);
+        return new FirefoxDriver(profile);
     }
 }
