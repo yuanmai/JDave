@@ -18,6 +18,8 @@ package jdave.junit4.specs;
 import java.util.Stack;
 
 import jdave.Specification;
+import org.junit.Rule;
+import org.junit.rules.ExpectedException;
 
 /**
  * This is a sample spec with a mix of passing and intentionally failing tests. It is used for testing the JUnit 4 runner.
@@ -25,6 +27,9 @@ import jdave.Specification;
  * @author Lasse Koskela
  */
 public class DiverseSpec extends Specification<Stack<?>> {
+    @Rule
+    public ExpectedException specRule = ExpectedException.none();
+
     public class FirstContext {
         private Stack<String> stack;
 
@@ -45,6 +50,9 @@ public class DiverseSpec extends Specification<Stack<?>> {
     public class SecondContext {
         private Stack<String> stack;
 
+        @Rule
+        public ExpectedException contextRule = ExpectedException.none();
+
         public Stack<String> create() {
             stack = new Stack<String>();
             return stack;
@@ -52,6 +60,14 @@ public class DiverseSpec extends Specification<Stack<?>> {
 
         public void throwsException() {
             throw new RuntimeException("intentional");
+        }
+
+        public void triggersContextRule() {
+            contextRule.expectMessage("context");
+        }
+
+        public void triggersSpecificationRule() {
+            specRule.expectMessage("spec");
         }
     }
 }

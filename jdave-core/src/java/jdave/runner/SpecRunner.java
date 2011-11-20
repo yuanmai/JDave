@@ -16,6 +16,7 @@
 package jdave.runner;
 
 import java.lang.annotation.Annotation;
+import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -31,7 +32,7 @@ import org.junit.Ignore;
  * @author Joni Freeman
  * @author Lasse Koskela
  */
-public class SpecRunner {
+public class SpecRunner implements MethodInvoker {
     public <T extends Specification<?>> void visit(Class<T> specType, ISpecVisitor callback) {
         for (Class<?> contextType : getContextsOf(specType)) {
             Context context = new Context(specType, contextType) {
@@ -76,7 +77,7 @@ public class SpecRunner {
                 @Override
                 protected Behavior newBehavior(Method method,
                         Class<? extends Specification<?>> specType, Class<?> contextType) {
-                    return new ExecutingBehavior(method, specType, contextType);
+                    return new ExecutingBehavior(method, specType, contextType, SpecRunner.this);
                 }
             };
             run(callback, context);
@@ -112,5 +113,10 @@ public class SpecRunner {
             }
         }
         return false;
+    }
+
+    public void invokeMethod(Method method, Specification<?> spec, Object context)
+            throws Throwable {
+        method.invoke(context);
     }
 }
