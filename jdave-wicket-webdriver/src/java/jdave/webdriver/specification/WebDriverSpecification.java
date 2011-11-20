@@ -29,7 +29,7 @@ public abstract class WebDriverSpecification<T> extends Specification<T> {
     @Override
     public final void create() {
         onBeforeCreate();
-        WebDriverHolder.set(new WebDriverFactory().createFireFoxDriver());
+        WebDriverHolder.set(new GuardingWebDriver(new WebDriverFactory().createFireFoxDriver(), this));
         browser.open();
         onCreate();
     }
