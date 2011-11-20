@@ -36,11 +36,23 @@ public class ExecutingBehavior extends Behavior {
     private final Class<?> contextType;
     private final Class<? extends Specification<?>> specType;
     private Object context;
+    private final MethodInvoker invoker;
 
-    public ExecutingBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+    public ExecutingBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType,
+                             MethodInvoker invoker) {
         super(contextType, method);
         this.specType = specType;
         this.contextType = contextType;
+        this.invoker = invoker;
+    }
+
+    public ExecutingBehavior(Method method, Class<? extends Specification<?>> specType, Class<?> contextType) {
+        this(method, specType, contextType, new MethodInvoker() {
+            public void invokeMethod(Method method, Specification<?> spec, Object context)
+                    throws Throwable {
+                method.invoke(context);
+            }
+        });
     }
 
     @Override
@@ -86,7 +98,7 @@ public class ExecutingBehavior extends Behavior {
         try {
             spec.create();
             context = newContext(spec);
-            method.invoke(context);
+            invoker.invokeMethod(method, spec, context);
             spec.verifyMocks();
             results.expected(method);
         } catch (InvocationTargetException e) {

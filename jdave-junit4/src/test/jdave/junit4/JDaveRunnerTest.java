@@ -61,6 +61,12 @@ public class JDaveRunnerTest {
         shouldHaveHappened("fireTestStarted:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
         shouldHaveHappened("fireTestFailure:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
         shouldHaveHappened("fireTestFinished:throwsException(jdave.junit4.specs.DiverseSpec$SecondContext)");
+        shouldHaveHappened("fireTestStarted:triggersContextRule(jdave.junit4.specs.DiverseSpec$SecondContext)");
+        shouldHaveHappened("fireTestFailure:triggersContextRule(jdave.junit4.specs.DiverseSpec$SecondContext)");
+        shouldHaveHappened("fireTestFinished:triggersContextRule(jdave.junit4.specs.DiverseSpec$SecondContext)");
+        shouldHaveHappened("fireTestStarted:triggersSpecificationRule(jdave.junit4.specs.DiverseSpec$SecondContext)");
+        shouldHaveHappened("fireTestFailure:triggersSpecificationRule(jdave.junit4.specs.DiverseSpec$SecondContext)");
+        shouldHaveHappened("fireTestFinished:triggersSpecificationRule(jdave.junit4.specs.DiverseSpec$SecondContext)");
     }
 
     @Test
